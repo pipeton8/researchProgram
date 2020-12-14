@@ -1,0 +1,123 @@
+% Remember to Typeset with XeLaTeX
+
+\documentclass[a4paper, margins=2cm,11pt]{article}
+
+%A Few Useful Packages
+\usepackage[margin=2cm]{geometry}
+\usepackage[spanish]{babel}
+\usepackage{etoolbox}
+\usepackage{marvosym}
+\usepackage{fontspec}
+\usepackage{xunicode,xltxtra,url,parskip}
+\RequirePackage{color,graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[big]{layaureo}
+\usepackage{supertabular}
+\usepackage{titlesec}	
+\usepackage{datetime}
+
+%Setup hyperref package, and colours for links
+\usepackage{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour, linkcolor=linkcolour}
+
+%: Date
+\makeatletter
+\renewcommand{\monthnamespanish}[1][\month]{%
+  \@orgargctr=#1\relax
+  \ifcase\@orgargctr
+    \PackageError{datetime}{Invalid Month number \the\@orgargctr}{%
+      Month numbers should go from 1 to 12}%
+    \or Enero%
+    \or Febrero%
+    \or Marzo%
+    \or Abril%
+    \or Mayo%
+    \or Junio%
+    \or Julio%
+    \or Agosto%
+    \or Septiembre%
+    \or Octubre%
+    \or Noviembre%
+    \or Diciembre%
+    \else \PackageError{datetime}{Invalid Month number \the\@orgargctr}{%
+      Month numbers should go from 1 to 12}%
+  \fi}
+\makeatother
+
+%: Tab command
+\newcommand{\tablength}{}
+\newcommand{\setTabParams}[1]{\renewcommand\tablength{}\forcsvlist{\listadd\tablength}{#1}}
+
+\newcommand{\setCols}[1]{			%
+	\ifnum0=\i						%
+		\ifdim0cm=#1				%
+			\def \firstCol {r}		%
+		\else						%
+			\def \firstCol {p{#1}}		%
+		\fi						%
+	\else \ifnum1=\i				%
+		\ifdim0cm=#1				%
+			\def \secondCol {l}		%
+		\else						%
+			\def \secondCol{p{#1}}	%
+		\fi						%
+	\else \ifnum2=\i				%
+		\ifnum0=#1				%
+			\def \sep {}			%
+		\else						%
+			\def \sep {|}			%
+		\fi						%
+	\fi \fi \fi						%
+	\advance\i by1					%
+}
+
+\newcommand{\tab}[1]{					%
+	\newcount\i						%
+	\forlistloop{\setCols}{\tablength}		%
+	\begin{tabular}{\firstCol \sep \secondCol}	%
+		#1							%
+	\end{tabular} \\						%
+}
+
+%: Margins
+\geometry{hoffset=-0.25in}
+
+%FONTS
+\defaultfontfeatures{Mapping=tex-text} 
+%\setmainfont[SmallCapsFont = Fontin SmallCaps]{Fontin}
+%%% modified for Karol Kozioł for ShareLaTeX use
+\setmainfont[
+SmallCapsFont = Fontin-SmallCaps.otf,
+BoldFont = Fontin-Bold.otf,
+ItalicFont = Fontin-Italic.otf
+]
+{Fontin.otf}
+%%%
+
+\titleformat{\section}{\Large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{7pt}
+
+%--------------------BEGIN DOCUMENT----------------------
+\begin{document}
+
+\pagestyle{empty} % non-numbered pages
+
+\font\fb=''[cmr10]'' %for use with \LaTeX command
+
+%:Title
+\par{\centering
+		{{\Huge Programa de Investigación} \\[1ex]
+		 {\Large Felipe Del Canto}	\\[1.5ex]
+		 {\Large \monthname\ de \the\year }
+	}\par}
+
+%Section: Personal Information
+\section{Objetivos generales}
+El siguiente programa busca promover dos proyectos de investigación para el primer semestre de 2021. El primero se sustenta en el documento “A complex net of intertwined complements: Measuring interdimensional dependence among the poor” y que busca estudiar una variación de una medida de pobreza. El segundo busca encontrar un efecto de las cuarentenas y el encierro durante la pandemia. Ambos proyectos están coautoreados con Cristine von Dessauer. A continuación desarrollo en detalle los pasos a seguir en cada uno de estos proyectos.
+
+\section{Objetivos particulares}
+El proyecto sobre las medidas de pobreza busca continuar el trabajo realizado durante este año 2020. Junto a Cristine recopilamos las bases de datos utilizadas por Alkire y Foster (2011) (en adelante AyF) para presentar su medida de pobreza. Además, logramos reproducir sus resultados para EE.UU. Cuando calculamos la variación propuesta en el documento para la medida de AyF, encontramos efectos de segundo orden sobre el \textit{headcount ratio}, el promedio de deprivación (FGT$_{0}$) y la severidad de la deprivación (FGT$_{2}$). La tarea actual es determinar la razón de estas similitudes y explicar por qué tendría o no sentido perseguir una generalización de la medida de AyF a las interacciones entre dimensiones de pobreza. En particular, una de las primeras tareas es replicar los resultados de los autores para Indonesia y calcular la nueva medida.
+
+Para el segundo proyecto, nos interesa cuantificar el efecto que han tenido las cuarentenas sobre la salud mental de la población. Para este fin, nuestra primera tarea es construir la base de datos, incorporando información sobre el método de cuarentenas dinámicas que el gobierno utilizó en una primera instancia. Asimismo, se deben recopilar indicadores de salud mental sobre la población. Para ello nos basaremos en una amplia literatura de Computer Science que presenta algoritmos y modelos capaces de extraer estos indicadores desde redes sociales.\footnote{Ver por ejemplo, Jiang et al., \textit{Detection of Mental Health Conditions from Reddit via Deep Contextualized Representations}, Proceedings of the 11th International Workshop on Health Text Mining and Information Analysis, 2020.} Usando estos indicadores junto con información geolocalizada, es posible construir una base de datos adecuada para el análisis de la pregunta en cuestión
+\end{document}
